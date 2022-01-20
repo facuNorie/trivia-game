@@ -25,7 +25,7 @@ export default function Answer({
     randomNumber()
   }, [answers])
   return (
-    <Grid templateColumns='repeat(2, 1fr)' gap={6} mt='50px' px={5}>
+    <Grid templateColumns='repeat(2, 1fr)' gap={6} my='50px' px={5}>
       {answers.map((answer, index) => {
         return (
           <Answers
@@ -63,11 +63,16 @@ const Answers = ({
     }, 1000)
   }
   return (
-    <GridItem order={listRandom[index]} w='100%' colSpan={{ base: 2, md: 1 }}>
+    <GridItem
+      order={listRandom[index]}
+      w='100%'
+      boxShadow='md'
+      colSpan={{ base: 2, md: 1 }}
+    >
       <Button
         w='100%'
         h='100px'
-        colorScheme={!reveal ? 'messenger' : index === 0 ? 'green' : 'red'}
+        colorScheme={!reveal ? 'gray' : index === 0 ? 'green' : 'red'}
         onClick={() => {
           handleAnswer(index)
         }}

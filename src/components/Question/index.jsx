@@ -1,11 +1,13 @@
 import React from 'react'
 import { decode } from 'html-entities'
-import { Text } from '@chakra-ui/react'
+import { Text, Box } from '@chakra-ui/react'
 
 export default function Question({ text }) {
   return (
-    <Text fontSize='3xl' p={5} textAlign='center' mt='50px'>
-      {decode(text, { level: 'html5' })}
-    </Text>
+    <Box bgColor='pink.400' color='white' boxShadow='xl' my='30px' mx={5} p='8'>
+      <Text fontSize='3xl' textAlign='center'>
+        {decode(text, { level: 'html5' })}
+      </Text>
+    </Box>
   )
 }
