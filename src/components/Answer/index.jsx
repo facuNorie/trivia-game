@@ -9,6 +9,7 @@ export default function Answer({
   score,
   setScore,
   generateQuestion,
+  setMessage,
 }) {
   const [listRandom, setListRandom] = useState([])
   const generateRandomNumber = () => Math.round(Math.random() * 10)
@@ -25,7 +26,12 @@ export default function Answer({
     randomNumber()
   }, [answers])
   return (
-    <Grid templateColumns='repeat(2, 1fr)' gap={6} my='50px' px={5}>
+    <Grid
+      templateColumns='repeat(2, 1fr)'
+      gap={6}
+      my={{ base: '20px', md: '50px' }}
+      px={5}
+    >
       {answers.map((answer, index) => {
         return (
           <Answers
@@ -38,6 +44,7 @@ export default function Answer({
             score={score}
             setScore={setScore}
             generateQuestion={generateQuestion}
+            setMessage={setMessage}
           />
         )
       })}
@@ -54,11 +61,18 @@ const Answers = ({
   score,
   generateQuestion,
   setScore,
+  setMessage,
 }) => {
   const handleAnswer = (index) => {
     setReveal(true)
-    index === 0 && setScore(score + 1)
+    if (index === 0) {
+      setMessage('CORRECT')
+      setScore(score + 1)
+    } else {
+      setMessage('INCORRECT')
+    }
     setTimeout(() => {
+      setMessage('')
       generateQuestion()
     }, 1000)
   }
@@ -71,7 +85,7 @@ const Answers = ({
     >
       <Button
         w='100%'
-        h='100px'
+        h={{ base: '70px', md: '110px' }}
         colorScheme={!reveal ? 'gray' : index === 0 ? 'green' : 'red'}
         onClick={() => {
           handleAnswer(index)

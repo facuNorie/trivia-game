@@ -6,7 +6,7 @@ import { Box } from '@chakra-ui/react'
 function App() {
   const [play, setPlay] = useState(false)
   return (
-    <Box bgColor='messenger.500' h={{ base: '100%', md: '100vh' }}>
+    <Box bgColor='messenger.500' h='100vh'>
       {play ? <Game /> : <Start setPlay={setPlay} />}
     </Box>
   )
