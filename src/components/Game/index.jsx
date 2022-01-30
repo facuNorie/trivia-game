@@ -11,11 +11,13 @@ import {
 import { getQuestion } from '../../services/triviaApi'
 import Question from '../Question'
 import Answer from '../Answer'
+import MessageResponse from '../MessageResponse'
 export default function Game() {
   const [question, setQuestion] = useState(null)
   const [answers, setAnswers] = useState([])
   const [score, setScore] = useState(0)
   const [reveal, setReveal] = useState(false)
+  const [message, setMessage] = useState('')
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -39,11 +41,23 @@ export default function Game() {
         : 'red'
   }
 
+  let shadowEffectColor =
+    message === 'CORRECT' ? 'green' : message === 'INCORRECT' && 'red'
+
   useEffect(() => {
     generateQuestion()
   }, [])
   return (
-    <Box>
+    <Box
+      h='100%'
+      transition='all .3s'
+      style={{
+        boxShadow:
+          message !== ''
+            ? `0px 0px 80px 10px ${shadowEffectColor} inset`
+            : 'none',
+      }}
+    >
       <Text fontWeight='bold' fontSize='xl' p={2} color='white'>
         Score: {score}/10
       </Text>
@@ -57,6 +71,7 @@ export default function Game() {
             {question !== null && question[0].difficulty}
           </Badge>
         </Box>
+        <MessageResponse title={message} />
         <Answer
           answers={answers}
           reveal={reveal}
@@ -64,6 +79,7 @@ export default function Game() {
           score={score}
           setScore={setScore}
           generateQuestion={generateQuestion}
+          setMessage={setMessage}
         />
       </ScaleFade>
       <Progress
@@ -73,7 +89,6 @@ export default function Game() {
         max='100'
         colorScheme='pink'
       />
-      <br />
     </Box>
   )
 }
