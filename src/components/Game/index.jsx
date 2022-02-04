@@ -8,45 +8,56 @@ import {
   ScaleFade,
 } from '@chakra-ui/react'
 
-import { getQuestion } from '../../services/triviaApi'
+import { getQuestions } from '../../services/triviaApi'
 import Question from '../Question'
 import Answer from '../Answer'
 import MessageResponse from '../MessageResponse'
+
 export default function Game() {
+  const [allQuestions, setAllQuestion] = useState(null)
   const [question, setQuestion] = useState(null)
   const [answers, setAnswers] = useState([])
-  const [score, setScore] = useState(0)
+  const [gameProgress, setGameProgress] = useState(1)
   const [reveal, setReveal] = useState(false)
   const [message, setMessage] = useState('')
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const generateQuestion = () => {
+  const getAllQuestions = async () => {
+    let data = await getQuestions()
+    setAllQuestion(data)
+    setQuestion(data[0])
+    setAnswers([data[0].correct_answer, ...data[0].incorrect_answers])
+    onOpen()
+  }
+  const generateQuestion = (index) => {
     setReveal(false)
     onClose()
-    getQuestion().then((res) => {
-      let data = res[0]
-      setQuestion(res)
-      setAnswers([data.correct_answer, ...data.incorrect_answers])
+    let selectQ = allQuestions[index]
+    setTimeout(() => {
+      setQuestion(selectQ)
+      setAnswers([selectQ.correct_answer, ...selectQ.incorrect_answers])
       onOpen()
-    })
+    }, 1000)
   }
+  /* Color of difficulty */
   let colorBadge = 'red'
   if (question !== null) {
     colorBadge =
-      question[0].difficulty === 'easy'
+      question.difficulty === 'easy'
         ? 'green'
-        : question[0].difficulty === 'medium'
+        : question.difficulty === 'medium'
         ? 'purple'
         : 'red'
   }
-
+  /* Shadow color of answer wrong or right */
   let shadowEffectColor =
     message === 'CORRECT' ? 'green' : message === 'INCORRECT' && 'red'
 
   useEffect(() => {
-    generateQuestion()
+    getAllQuestions()
   }, [])
+
   return (
     <Box
       h='100%'
@@ -59,16 +70,13 @@ export default function Game() {
       }}
     >
       <Text fontWeight='bold' fontSize='xl' p={2} color='white'>
-        Score: {score}/10
+        Question: {gameProgress}/10
       </Text>
-      {/* <Button w='10%' h='50px' colorScheme='orange' onClick={generateQuestion}>
-          Next
-        </Button> */}
       <ScaleFade initialScale={0.7} in={isOpen}>
-        <Question text={question !== null && question[0].question} />
+        <Question text={question !== null && question.question} />
         <Box align='center'>
           <Badge colorScheme={question !== null && colorBadge}>
-            {question !== null && question[0].difficulty}
+            {question !== null && question.difficulty}
           </Badge>
         </Box>
         <MessageResponse title={message} />
@@ -76,8 +84,8 @@ export default function Game() {
           answers={answers}
           reveal={reveal}
           setReveal={setReveal}
-          score={score}
-          setScore={setScore}
+          gameProgress={gameProgress}
+          setGameProgress={setGameProgress}
           generateQuestion={generateQuestion}
           setMessage={setMessage}
         />
@@ -85,7 +93,7 @@ export default function Game() {
       <Progress
         hasStripe
         isAnimated
-        value={score * 10}
+        value={gameProgress * 10}
         max='100'
         colorScheme='pink'
       />
