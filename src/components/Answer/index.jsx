@@ -6,8 +6,8 @@ export default function Answer({
   answers,
   reveal,
   setReveal,
-  score,
-  setScore,
+  gameProgress,
+  setGameProgress,
   generateQuestion,
   setMessage,
 }) {
@@ -41,8 +41,8 @@ export default function Answer({
             listRandom={listRandom}
             reveal={reveal}
             setReveal={setReveal}
-            score={score}
-            setScore={setScore}
+            gameProgress={gameProgress}
+            setGameProgress={setGameProgress}
             generateQuestion={generateQuestion}
             setMessage={setMessage}
           />
@@ -58,22 +58,23 @@ const Answers = ({
   listRandom,
   reveal,
   setReveal,
-  score,
+  gameProgress,
   generateQuestion,
-  setScore,
+  setGameProgress,
   setMessage,
 }) => {
   const handleAnswer = (index) => {
     setReveal(true)
     if (index === 0) {
       setMessage('CORRECT')
-      setScore(score + 1)
     } else {
       setMessage('INCORRECT')
     }
+
     setTimeout(() => {
       setMessage('')
-      generateQuestion()
+      generateQuestion(gameProgress)
+      setGameProgress(gameProgress + 1)
     }, 1000)
   }
   return (
