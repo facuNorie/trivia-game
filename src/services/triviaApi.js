@@ -1,7 +1,7 @@
-const url = 'https://opentdb.com/api.php?amount=1'
+const url = 'https://opentdb.com/api.php?amount=10'
 
-export const getQuestion = async () => {
+export const getQuestions = async () => {
   const data = await fetch(url).then((res) => res.json())
-  console.log(data.results[0])
+  /* console.log(data.results[0]) */
   return data.results
 }
