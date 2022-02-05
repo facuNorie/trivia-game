@@ -11,11 +11,17 @@ export const SingleAnswer = ({
   generateQuestion,
   setGameProgress,
   setMessage,
+  score,
+  setScore,
+  difficulty,
 }) => {
   const handleAnswer = (index) => {
     setReveal(true)
     if (index === 0) {
       setMessage('CORRECT')
+      if (difficulty === 'easy') setScore(score + 5)
+      if (difficulty === 'medium') setScore(score + 10)
+      if (difficulty === 'hard') setScore(score + 15)
     } else {
       setMessage('INCORRECT')
     }

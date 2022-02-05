@@ -10,6 +10,9 @@ export default function Answer({
   setGameProgress,
   generateQuestion,
   setMessage,
+  score,
+  setScore,
+  difficulty,
 }) {
   const [listRandom, setListRandom] = useState([])
   const generateRandomNumber = () => Math.round(Math.random() * 10)
@@ -45,6 +48,9 @@ export default function Answer({
             setGameProgress={setGameProgress}
             generateQuestion={generateQuestion}
             setMessage={setMessage}
+            score={score}
+            setScore={setScore}
+            difficulty={difficulty}
           />
         )
       })}
