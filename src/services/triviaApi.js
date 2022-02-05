@@ -1,4 +1,4 @@
-const url = 'https://opentdb.com/api.php?amount=10'
+const url = 'https://opentdb.com/api.php?amount=10&type=multiple'
 
 export const getQuestions = async () => {
   const data = await fetch(url).then((res) => res.json())
