@@ -32,8 +32,9 @@ export default function Answer({
     <Grid
       templateColumns='repeat(2, 1fr)'
       gap={6}
-      my={{ base: '20px', md: '50px' }}
+      mt={{ base: '20px', md: '50px' }}
       px={5}
+      h={{ base: '60%', md: '50%' }}
     >
       {answers.map((answer, index) => {
         return (

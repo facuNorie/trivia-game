@@ -65,26 +65,29 @@ export default function Game({ setPlay }) {
             Question: {gameProgress}/10
           </Text>
           <ScaleFade initialScale={0.7} in={isOpen}>
-            <Question text={question !== null && question?.question} />
-            <DifficultyBadge question={question} />
-            <MessageResponse title={message} />
-            <Answer
-              answers={answers}
-              reveal={reveal}
-              setReveal={setReveal}
-              gameProgress={gameProgress}
-              setGameProgress={setGameProgress}
-              generateQuestion={generateQuestion}
-              setMessage={setMessage}
-              score={score}
-              setScore={setScore}
-              difficulty={question?.difficulty}
-            />
+            <Box h='460px'>
+              <Question text={question !== null && question?.question} />
+              <DifficultyBadge question={question} />
+              <MessageResponse title={message} />
+              <Answer
+                answers={answers}
+                reveal={reveal}
+                setReveal={setReveal}
+                gameProgress={gameProgress}
+                setGameProgress={setGameProgress}
+                generateQuestion={generateQuestion}
+                setMessage={setMessage}
+                score={score}
+                setScore={setScore}
+                difficulty={question?.difficulty}
+              />
+            </Box>
           </ScaleFade>
           <Progress
+            mt={10}
             hasStripe
             isAnimated
-            value={gameProgress * 10}
+            value={gameProgress * 10 - 10}
             max='100'
             colorScheme='pink'
           />

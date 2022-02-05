@@ -38,10 +38,12 @@ export const SingleAnswer = ({
       w='100%'
       boxShadow='md'
       colSpan={{ base: 2, md: 1 }}
+      h='100%'
     >
       <Button
         w='100%'
-        h={{ base: '70px', md: '110px' }}
+        h='100%'
+        /* h={{ base: '70px', md: '110px' }} */
         colorScheme={!reveal ? 'gray' : index === 0 ? 'green' : 'red'}
         onClick={() => {
           handleAnswer(index)
