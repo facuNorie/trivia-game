@@ -1,17 +1,11 @@
 import { useState, useEffect } from 'react'
-import {
-  useDisclosure,
-  Box,
-  Text,
-  Badge,
-  Progress,
-  ScaleFade,
-} from '@chakra-ui/react'
+import { useDisclosure, Box, Text, Progress, ScaleFade } from '@chakra-ui/react'
 
 import { getQuestions } from '../../services/triviaApi'
 import Question from '../Question'
 import Answer from '../Answer'
 import MessageResponse from '../MessageResponse'
+import DifficultyBadge from '../DifficultyBadge'
 
 export default function Game() {
   const [allQuestions, setAllQuestion] = useState(null)
@@ -30,6 +24,7 @@ export default function Game() {
     setAnswers([data[0].correct_answer, ...data[0].incorrect_answers])
     onOpen()
   }
+
   const generateQuestion = (index) => {
     setReveal(false)
     onClose()
@@ -40,16 +35,7 @@ export default function Game() {
       onOpen()
     }, 1000)
   }
-  /* Color of difficulty */
-  let colorBadge = 'red'
-  if (question !== null) {
-    colorBadge =
-      question.difficulty === 'easy'
-        ? 'green'
-        : question.difficulty === 'medium'
-        ? 'purple'
-        : 'red'
-  }
+
   /* Shadow color of answer wrong or right */
   let shadowEffectColor =
     message === 'CORRECT' ? 'green' : message === 'INCORRECT' && 'red'
@@ -74,11 +60,7 @@ export default function Game() {
       </Text>
       <ScaleFade initialScale={0.7} in={isOpen}>
         <Question text={question !== null && question.question} />
-        <Box align='center'>
-          <Badge colorScheme={question !== null && colorBadge}>
-            {question !== null && question.difficulty}
-          </Badge>
-        </Box>
+        <DifficultyBadge question={question} />
         <MessageResponse title={message} />
         <Answer
           answers={answers}
