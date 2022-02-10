@@ -5,12 +5,13 @@ import {
   Text,
   SlideFade,
   keyframes,
-  Spinner,
-  Link,
+  ScaleFade,
 } from '@chakra-ui/react'
+import SpinnerLoad from '../SpinnerLoad'
+import SocialMedia from '../SocialMedia'
 
 const bounce = keyframes`
-  from {transform: scale(1.2,1.2)}
+  from {transform: scale(1.1,1.1)}
   to {transform: scale(1.4,1.4)}
 `
 export default function Start({ setPlay }) {
@@ -22,6 +23,10 @@ export default function Start({ setPlay }) {
       setShowText(true)
     }, 2000)
   }, [])
+
+  if (showText === false) {
+    return <SpinnerLoad />
+  }
 
   return (
     <Box
@@ -51,20 +56,20 @@ export default function Start({ setPlay }) {
           </Text>
         </SlideFade>
       </Box>
-      <SlideFade in={!showText}>
-        <Spinner
-          size='xl'
-          color='pink.400'
-          thickness='4px'
-          speed='0.65s'
-          emptyColor='white'
-        />
-      </SlideFade>
+      <ScaleFade initialScale={0.1} in={showText}>
+        <Text textAlign='center' color='white' fontWeight='bold' px={3}>
+          one question, 4 options, will you get it right? <br /> and remember an
+          easy question is worth 5 points, a medium 10 and a difficult one 15
+          <br />
+          try it and let's see your score
+        </Text>
+      </ScaleFade>
 
       <SlideFade offsetY='-100px' in={showText}>
         <Button
           bgColor='pink.400'
           color='white'
+          fontWeight='bold'
           size='lg'
           _hover={{ bg: 'pink.400' }}
           animation={bounceAnimation}
@@ -72,14 +77,7 @@ export default function Start({ setPlay }) {
         >
           Play
         </Button>
-        <Box position='absolute' bottom='0' right='0' color='white'>
-          <Link href='https://www.linkedin.com/in/facunorie/' isExternal>
-            <i className='bx bxl-linkedin' style={{ fontSize: '24px' }}></i>
-          </Link>
-          <Link href='https://twitter.com/noriedev' isExternal ml='10px'>
-            <i className='bx bxl-twitter' style={{ fontSize: '24px' }}></i>
-          </Link>
-        </Box>
+        <SocialMedia />
       </SlideFade>
     </Box>
   )

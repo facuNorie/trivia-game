@@ -6,6 +6,7 @@ import Answer from '../Answer'
 import MessageResponse from '../MessageResponse'
 import DifficultyBadge from '../DifficultyBadge'
 import End from '../End'
+import SpinnerLoad from '../SpinnerLoad'
 
 export default function Game({ setPlay }) {
   const [allQuestions, setAllQuestion] = useState(null)
@@ -33,7 +34,7 @@ export default function Game({ setPlay }) {
     let selectQ = allQuestions[index]
     setTimeout(() => {
       setQuestion(selectQ)
-      setAnswers([selectQ.correct_answer, ...selectQ.incorrect_answers])
+      setAnswers([selectQ?.correct_answer, ...selectQ?.incorrect_answers])
       onOpen()
     }, 1000)
   }
@@ -47,6 +48,10 @@ export default function Game({ setPlay }) {
     localStorage.getItem('record') !== null &&
       setRecord(localStorage.getItem('record'))
   }, [])
+
+  if (question === null) {
+    return <SpinnerLoad />
+  }
 
   return (
     <>
@@ -64,7 +69,7 @@ export default function Game({ setPlay }) {
           <Text fontWeight='bold' fontSize='xl' p={2} color='white'>
             Question: {gameProgress}/10
           </Text>
-          <ScaleFade initialScale={0.7} in={isOpen}>
+          <ScaleFade initialScale={0.5} in={isOpen}>
             <Box h='460px'>
               <Question text={question !== null && question?.question} />
               <DifficultyBadge question={question} />
