@@ -1,7 +1,11 @@
-import React, { useEffect } from 'react'
-import { Box, Button, Text, Tag, TagLabel } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { Box, Button, Text, SlideFade } from '@chakra-ui/react'
+import confetti from 'canvas-confetti'
+import SpinnerLoad from '../SpinnerLoad'
+import SocialMedia from '../SocialMedia'
 
 export default function End({ score, record, setRecord, setPlay }) {
+  const [showText, setShowText] = useState(false)
   const newRecord = () => {
     if (score > record) {
       setRecord(score)
@@ -10,33 +14,51 @@ export default function End({ score, record, setRecord, setPlay }) {
 
   useEffect(() => {
     newRecord()
+
+    setTimeout(() => {
+      setShowText(true)
+      confetti()
+    }, 1000)
   }, [])
   useEffect(() => {
     localStorage.setItem('record', record)
   }, [record])
 
-  return (
-    <Box
-      h='100vh'
-      d='flex'
-      flexDir='column'
-      alignItems='center'
-      justifyContent='space-around'
-    >
-      <Box textAlign='center'>
-        <Text fontSize='2xl'>You scored:</Text>
-        <Text fontSize='7xl'>{score}</Text>
-      </Box>
+  if (showText === false) {
+    return <SpinnerLoad />
+  }
 
-      <Text>Record: {record} </Text>
-      <Button
-        bgColor='pink.400'
-        color='white'
-        _hover={{ bg: 'pink.400' }}
-        onClick={() => setPlay(false)}
+  return (
+    <SlideFade offsetY='50px' in={showText}>
+      <Box
+        h='100vh'
+        d='flex'
+        flexDir='column'
+        alignItems='center'
+        justifyContent='space-evenly'
       >
-        Play again
-      </Button>
-    </Box>
+        <Box textAlign='center'>
+          <Text fontSize='2xl' color='white'>
+            You scored:
+          </Text>
+          <Text fontSize='7xl' color='pink.400' fontWeight='extrabold'>
+            {score}
+          </Text>
+        </Box>
+
+        <Text color='white' fontWeight='bold'>
+          Record: {record}{' '}
+        </Text>
+        <Button
+          bgColor='pink.400'
+          color='white'
+          _hover={{ bg: 'pink.400' }}
+          onClick={() => setPlay(false)}
+        >
+          Play again
+        </Button>
+      </Box>
+      <SocialMedia />
+    </SlideFade>
   )
 }
