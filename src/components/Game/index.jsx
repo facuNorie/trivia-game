@@ -58,6 +58,9 @@ export default function Game({ setPlay }) {
       {gameProgress <= 10 ? (
         <Box
           h='100%'
+          display='flex'
+          flexDir='column'
+          justifyContent='space-between'
           transition='all .3s'
           style={{
             boxShadow:
@@ -89,7 +92,7 @@ export default function Game({ setPlay }) {
             </Box>
           </ScaleFade>
           <Progress
-            mt={10}
+            mb='8px'
             hasStripe
             isAnimated
             value={gameProgress * 10 - 10}
