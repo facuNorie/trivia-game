@@ -2,6 +2,7 @@
 
 Mini juego de preguntas y respuestas (multiple-choice) con su sistema de puntación.
 Las tecnologías utilizadas fueron: ReactJs + ChakraUI
+Link: https://trivia-game-zeta.vercel.app/
 
 ## Juego
 
