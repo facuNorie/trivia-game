@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Box,
-  Button,
-  Text,
-  SlideFade,
-  keyframes,
-  ScaleFade,
-} from '@chakra-ui/react'
+import { Box, Text, SlideFade, ScaleFade } from '@chakra-ui/react'
 import SpinnerLoad from '../SpinnerLoad'
 import SocialMedia from '../SocialMedia'
+import PlayButton from '../PlayButton'
 
-const bounce = keyframes`
-  from {transform: scale(1.1,1.1)}
-  to {transform: scale(1.4,1.4)}
-`
 export default function Start({ setPlay }) {
   const [showText, setShowText] = useState(false)
-  const bounceAnimation = `${bounce} infinite .8s alternate`
 
   useEffect(() => {
     setTimeout(() => {
@@ -66,17 +55,7 @@ export default function Start({ setPlay }) {
       </ScaleFade>
 
       <SlideFade offsetY='-100px' in={showText}>
-        <Button
-          bgColor='pink.400'
-          color='white'
-          fontWeight='bold'
-          size='lg'
-          _hover={{ bg: 'pink.400' }}
-          animation={bounceAnimation}
-          onClick={() => setPlay(true)}
-        >
-          Play
-        </Button>
+        <PlayButton text='Play' fw='bold' sz='lg' setPlay={setPlay} />
         <SocialMedia />
       </SlideFade>
     </Box>

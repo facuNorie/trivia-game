@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Text, SlideFade } from '@chakra-ui/react'
+import { Box, Text, SlideFade } from '@chakra-ui/react'
 import confetti from 'canvas-confetti'
 import SpinnerLoad from '../SpinnerLoad'
 import SocialMedia from '../SocialMedia'
+import PlayButton from '../PlayButton'
 
 export default function End({ score, record, setRecord, setPlay }) {
   const [showText, setShowText] = useState(false)
@@ -14,12 +15,12 @@ export default function End({ score, record, setRecord, setPlay }) {
 
   useEffect(() => {
     newRecord()
-
     setTimeout(() => {
       setShowText(true)
       confetti()
     }, 1000)
   }, [])
+
   useEffect(() => {
     localStorage.setItem('record', record)
   }, [record])
@@ -47,16 +48,9 @@ export default function End({ score, record, setRecord, setPlay }) {
         </Box>
 
         <Text color='white' fontWeight='bold'>
-          Record: {record}{' '}
+          Record: {record}
         </Text>
-        <Button
-          bgColor='pink.400'
-          color='white'
-          _hover={{ bg: 'pink.400' }}
-          onClick={() => setPlay(false)}
-        >
-          Play again
-        </Button>
+        <PlayButton text='Play again' fw='normal' sz='md' setPlay={setPlay} />
       </Box>
       <SocialMedia />
     </SlideFade>
