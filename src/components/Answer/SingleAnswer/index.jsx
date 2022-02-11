@@ -43,7 +43,6 @@ export const SingleAnswer = ({
       <Button
         w='100%'
         h='100%'
-        /* h={{ base: '70px', md: '110px' }} */
         colorScheme={!reveal ? 'gray' : index === 0 ? 'green' : 'red'}
         onClick={() => {
           handleAnswer(index)
