@@ -5,9 +5,9 @@ export default function DifficultyBadge({ question }) {
   let colorBadge = 'red'
   if (question !== null) {
     colorBadge =
-      question.difficulty === 'easy'
+      question?.difficulty === 'easy'
         ? 'green'
-        : question.difficulty === 'medium'
+        : question?.difficulty === 'medium'
         ? 'purple'
         : 'red'
   }
@@ -15,7 +15,7 @@ export default function DifficultyBadge({ question }) {
   return (
     <Box align='center'>
       <Badge colorScheme={question !== null && colorBadge}>
-        {question !== null && question.difficulty}
+        {question !== null && question?.difficulty}
       </Badge>
     </Box>
   )
